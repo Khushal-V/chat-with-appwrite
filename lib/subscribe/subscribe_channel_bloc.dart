@@ -43,7 +43,9 @@ class SubscribeChannelBloc
         print("Chat Collection");
         print(response.payload);
         //Khushal: If update from chat collection then should update into chat list
-        add(UpdateDashBoardChatEvent(payload: response.payload));
+        Future.delayed(const Duration(milliseconds: 500)).then(
+          (value) => add(UpdateDashBoardChatEvent(payload: response.payload)),
+        );
       }
     });
   }

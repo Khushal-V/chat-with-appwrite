@@ -73,7 +73,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         //Khushal: Update list with incomming chat user
         state.pagingController.itemList?.insert(0, chat);
       }
-      add(RefreshDashboardEvent());
     }
+    add(RefreshDashboardEvent());
   }
 }

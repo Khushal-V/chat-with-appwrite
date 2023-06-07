@@ -135,9 +135,18 @@ class ChatServiceImpl extends ChatService with ErrorMixin {
       if (chat.unreadCount == null && chat.unreadCount?.isNotEmpty == true) {
         chat.unreadCount = {message.receiverId!: 1, message.senderId!: 0};
       } else {
-        chat.unreadCount![message.receiverId!] =
-            chat.unreadCount![message.receiverId!] + 1;
-        chat.unreadCount![message.senderId!] = 0;
+        if (chat.unreadCount!.containsKey(message.receiverId!)) {
+          chat.unreadCount![message.receiverId!] =
+              chat.unreadCount![message.receiverId!] + 1;
+        } else {
+          chat.unreadCount = {message.receiverId!: 1};
+        }
+
+        if (chat.unreadCount!.containsKey(message.senderId!)) {
+          chat.unreadCount![message.senderId!] = 0;
+        } else {
+          chat.unreadCount = {message.senderId!: 0};
+        }
       }
 
       //Khushal: Update chat with latest last messages nad unread count
