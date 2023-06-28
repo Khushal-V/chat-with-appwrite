@@ -1,13 +1,14 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:my_chat/custom_widgets/loader_view.dart';
 import 'package:my_chat/utils/app_colors.dart';
 import 'package:my_chat/utils/extensions.dart';
 import 'package:sizer/sizer.dart';
 
 class CircleImage extends StatelessWidget {
-  final Uint8List? image;
+  final String? image;
   final double? height;
   final double? width;
   const CircleImage({super.key, this.image, this.height, this.width});
@@ -23,8 +24,8 @@ class CircleImage extends StatelessWidget {
           border: Border.all(color: Theme.of(context).primaryColor),
           image: isImage
               ? DecorationImage(
-                  image: MemoryImage(
-                    image!,
+                  image: CachedNetworkImageProvider(
+                    image ?? "",
                   ),
                   fit: BoxFit.fill,
                 )
@@ -45,7 +46,7 @@ class CircleImage extends StatelessWidget {
 
 class ProfileImageView extends StatelessWidget {
   final String? imagePath;
-  final Uint8List? profileImage;
+  final String? profileImage;
   final Function()? onTap;
   const ProfileImageView(
       {super.key, this.imagePath, this.onTap, this.profileImage});
@@ -73,7 +74,7 @@ class ProfileImageView extends StatelessWidget {
                         fit: BoxFit.fill)
                     : profileImage != null
                         ? DecorationImage(
-                            image: MemoryImage(
+                            image: CachedNetworkImageProvider(
                               profileImage!,
                             ),
                             fit: BoxFit.fill)
@@ -117,5 +118,24 @@ class ProfileImageView extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+class NetworkCachedImage extends StatelessWidget {
+  final String image;
+  const NetworkCachedImage({super.key, required this.image});
+
+  @override
+  Widget build(BuildContext context) {
+    return CachedNetworkImage(
+        imageUrl: image,
+        fit: BoxFit.cover,
+        progressIndicatorBuilder: (context, url, progress) {
+          return const Center(
+            child: LoaderView(
+              loaderColor: AppColors.whiteColor,
+            ),
+          );
+        });
   }
 }

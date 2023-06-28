@@ -24,29 +24,33 @@ class MessagesServiceImpl extends MessagesService with ErrorMixin {
           if (cursorAfter != null) Query.cursorAfter(cursorAfter),
         ],
       );
-      Completer<MessagesResponse> messagesCompleter =
-          Completer<MessagesResponse>();
-      List<Future<Messages>> messages =
-          await documents.documents.map((e) async {
-        Messages messages = Messages.fromJson(e.toMap());
-        //Khushal: If message type photo then should get message images
-        if (messages.messageType?.isPhoto == true) {
-          messages.uploadedFile = [];
-          for (String fileId in messages.images ?? []) {
-            try {
-              Uint8List file = await getUploadedFile(fileId);
-              messages.uploadedFile!.add(file);
-            } catch (e) {}
-          }
-        }
-        return messages;
-      }).toList();
-      List<Messages> allMessages = await Future.wait(await messages);
+      // Completer<MessagesResponse> messagesCompleter =
+      //     Completer<MessagesResponse>();
+      // List<Future<Messages>> messages =
+      //     await documents.documents.map((e) async {
+      //   Messages messages = Messages.fromJson(e.toMap());
+      //   //Khushal: If message type photo then should get message images
+      //   if (messages.messageType?.isPhoto == true) {
+      //     messages.uploadedFile = [];
+      //     for (String fileId in messages.images ?? []) {
+      //       try {
+      //         Uint8List file = await getUploadedFile(fileId);
+      //         messages.uploadedFile!.add(file);
+      //       } catch (e) {}
+      //     }
+      //   }
+      //   return messages;
+      // }).toList();
+      // List<Messages> allMessages = await Future.wait(await messages);
+      List<Messages> allMessages =
+          documents.documents.map((e) => Messages.fromJson(e.toMap())).toList();
       String? lastId =
           documents.documents.length < 10 ? null : documents.documents.last.$id;
-      messagesCompleter.complete(MessagesResponse(
-          messages: allMessages, total: documents.total, lastId: lastId));
-      return messagesCompleter.future;
+      return MessagesResponse(
+          messages: allMessages, total: documents.total, lastId: lastId);
+      // messagesCompleter.complete(MessagesResponse(
+      //     messages: allMessages, total: documents.total, lastId: lastId));
+      // return messagesCompleter.future;
     } catch (e) {
       print(e.toString());
       return Future.value(

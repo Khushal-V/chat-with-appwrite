@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:my_chat/screens/auth/login_page.dart';
 import 'package:my_chat/screens/auth/models/auth_user.dart';
@@ -94,7 +93,7 @@ Route<dynamic> commonNavigation(RouteSettings settings) {
       );
     case RoutesName.viewImage:
       return _getPageRoute(
-        ImageViewPage(imageData: settings.arguments as Uint8List),
+        ImageViewPage(imageUrls: settings.arguments as List<String>),
         settings,
       );
     default:

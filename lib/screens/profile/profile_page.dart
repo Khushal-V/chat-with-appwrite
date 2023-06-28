@@ -73,7 +73,7 @@ class _ProfilePageUIState extends State<ProfilePageUI> {
                 //Khushal: Profile pic view
                 ProfileImageView(
                   imagePath: selectedFile?.path,
-                  profileImage: AppWriteService.user?.profile,
+                  profileImage: AppWriteService.user?.profileUrl,
                   onTap: () {
                     context.read<ProfileBloc>().add(SelectUserImageEvent());
                   },

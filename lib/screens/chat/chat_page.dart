@@ -115,6 +115,7 @@ class _ChatPageUIState extends State<ChatPageUI> {
         //Khushal: Clear _messageController if message send success
         if (state is MessageSentSuccessState) {
           _messageController.clear();
+          selectedImages.clear();
         }
 
         //Khushal: Update messages images
@@ -254,6 +255,7 @@ class SendMessageView extends StatelessWidget {
         maxLine: 5,
         controller: controller,
         hintText: AppStrings.typeMessage,
+        keyboardType: TextInputType.multiline,
         suffixIcon: GestureDetector(
           onTap: onSend,
           child: Icon(

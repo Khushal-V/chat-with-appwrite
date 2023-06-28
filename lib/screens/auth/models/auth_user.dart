@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:my_chat/services/appwirte_service.dart';
 
 class AuthUser {
   String? name;
@@ -24,4 +25,8 @@ class AuthUser {
     data['profileId'] = profileId;
     return data;
   }
+
+  String? get profileUrl => profileId == null
+      ? null
+      : "https://cloud.appwrite.io/v1/storage/buckets/${AppCredentials.profileBucketCollection}/files/$profileId/view?project=${AppCredentials.projectId}&mode=admin";
 }

@@ -93,13 +93,15 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             await authService.uploadProfileImage(event.selectedFile!.path);
 
         //Khushal: Delete old profile pic from storage
-        await authService.deleteUserProfile(user.profileId ?? "");
+        if (user.profileId != null) {
+          await authService.deleteUserProfile(user.profileId ?? "");
+        }
 
         //Khushal: Update user object with new profileId
         user.profileId = fileId;
 
-        //Khushal: Get user profile with new profileId
-        user.profile = await authService.getUserProfilePic(fileId);
+        // //Khushal: Get user profile with new profileId
+        // user.profile = await authService.getUserProfilePic(fileId);
       }
 
       //Khushal: Update user name flow

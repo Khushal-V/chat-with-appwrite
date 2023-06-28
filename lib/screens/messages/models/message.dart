@@ -52,7 +52,7 @@ class Messages extends BaseResponse {
     images = json['imageIds'].cast<String>();
     status =
         json['status'].toString().toEnum<MessageStatus>(MessageStatus.values);
-    isDeleted = json["isDeleted"];
+    isDeleted = json["isDeleted"] ?? false;
   }
 
   Map<String, dynamic> toJson() {
@@ -69,6 +69,13 @@ class Messages extends BaseResponse {
   }
 
   bool get isCurrentUser => senderId == AppWriteService.user?.id;
+
+  List<String> get imageUrls =>
+      images
+          ?.map((e) =>
+              "https://cloud.appwrite.io/v1/storage/buckets/${AppCredentials.bucketCollection}/files/$e/view?project=${AppCredentials.projectId}&mode=admin")
+          .toList() ??
+      [];
 }
 
 enum MessageTypes {

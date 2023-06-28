@@ -70,16 +70,16 @@ class MessagesBloc extends Bloc<MessagesEvent, MessagesState> {
     //Khushal: Check new message status is sent and message have curent chatID
     if (message.chatId == event.chatID && message.status?.isSent == true) {
       //Khushal: Check message images
-      if (message.messageType?.isPhoto == true) {
-        List<Uint8List> files = [];
-        //Khushal: Get message images
-        for (String fileId in message.images ?? []) {
-          Uint8List file = await messagesService.getUploadedFile(fileId);
-          files.add(file);
-        }
-        //Khushal: Update message images
-        message.uploadedFile = files;
-      }
+      // if (message.messageType?.isPhoto == true) {
+      //   List<Uint8List> files = [];
+      //   //Khushal: Get message images
+      //   for (String fileId in message.images ?? []) {
+      //     Uint8List file = await messagesService.getUploadedFile(fileId);
+      //     files.add(file);
+      //   }
+      //   //Khushal: Update message images
+      //   message.uploadedFile = files;
+      // }
 
       //Khushal: Get current message from list
       Messages? allReadyMessage = state.pagingController.itemList!

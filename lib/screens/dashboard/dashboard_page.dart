@@ -94,8 +94,11 @@ class _DashboardPageUIState extends State<DashboardPageUI> {
                   pagingController: state.pagingController,
                   builderDelegate: PagedChildBuilderDelegate<CreateNewChat>(
                     newPageProgressIndicatorBuilder: (context) {
-                      return LoaderView(
-                        loaderColor: Theme.of(context).primaryColor,
+                      return Center(
+                        heightFactor: 25,
+                        child: LoaderView(
+                          loaderColor: Theme.of(context).primaryColor,
+                        ),
                       );
                     },
                     firstPageProgressIndicatorBuilder: (context) {
@@ -153,7 +156,7 @@ class ChatTile extends StatelessWidget {
             children: [
               //Khushal: User profile
               CircleImage(
-                image: chat.chatUser?.profile,
+                image: chat.chatUser?.profileUrl,
               ),
               10.wSizedBox,
               Expanded(

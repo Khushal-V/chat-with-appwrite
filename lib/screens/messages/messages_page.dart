@@ -10,6 +10,7 @@ import 'package:my_chat/custom_widgets/title_text_view.dart';
 import 'package:my_chat/screens/auth/models/auth_user.dart';
 import 'package:my_chat/screens/messages/models/message.dart';
 import 'package:my_chat/screens/messages/bloc/messages_bloc.dart';
+import 'package:my_chat/screens/messages/views/chat_images_view.dart';
 import 'package:my_chat/utils/app_colors.dart';
 import 'package:my_chat/utils/app_router.dart';
 import 'package:my_chat/utils/extensions.dart';
@@ -130,17 +131,22 @@ class MessageTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (messagesState.deleteMessages.isNotEmpty && messages.isCurrentUser) {
-          context
-              .read<MessagesBloc>()
-              .add(CreateDeleteMessageListEvent(message: messages));
+        if (messages.isDeleted == false) {
+          if (messagesState.deleteMessages.isNotEmpty &&
+              messages.isCurrentUser) {
+            context
+                .read<MessagesBloc>()
+                .add(CreateDeleteMessageListEvent(message: messages));
+          }
         }
       },
       onLongPress: () {
-        if (messagesState.deleteMessages.isEmpty && messages.isCurrentUser) {
-          context
-              .read<MessagesBloc>()
-              .add(CreateDeleteMessageListEvent(message: messages));
+        if (messages.isDeleted == false) {
+          if (messagesState.deleteMessages.isEmpty && messages.isCurrentUser) {
+            context
+                .read<MessagesBloc>()
+                .add(CreateDeleteMessageListEvent(message: messages));
+          }
         }
       },
       child: Container(
@@ -160,7 +166,8 @@ class MessageTile extends StatelessWidget {
                     children: <Widget>[
                       Container(
                         margin: const EdgeInsets.only(top: 4.0),
-                        padding: const EdgeInsets.all(10.0),
+                        padding: const EdgeInsets.only(
+                            top: 10, left: 10, right: 10, bottom: 5),
                         decoration: BoxDecoration(
                           color: messages.isCurrentUser
                               ? Theme.of(context).primaryColor
@@ -210,19 +217,19 @@ class MessageTile extends StatelessWidget {
                                       : AppColors.textColor,
                                 ),
                               ],
-                              //Khushal: Messages time view
-                              TitleTextView(
-                                DateTime.parse(messages.createdAt!)
-                                    .toLocal()
-                                    .formatMessageTime,
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.w300,
-                                textAlign: TextAlign.end,
-                                color: messages.isCurrentUser
-                                    ? AppColors.whiteColor
-                                    : AppColors.textColor,
-                              ),
                             ],
+                            //Khushal: Messages time view
+                            TitleTextView(
+                              DateTime.parse(messages.createdAt!)
+                                  .toLocal()
+                                  .formatMessageTime,
+                              fontSize: 10.0,
+                              fontWeight: FontWeight.w400,
+                              textAlign: TextAlign.end,
+                              color: messages.isCurrentUser
+                                  ? AppColors.whiteColor
+                                  : AppColors.textColor,
+                            ),
                           ],
                         ),
                       ),
@@ -272,16 +279,317 @@ class MessageImages extends StatelessWidget {
         width: 75.w,
         child: Stack(
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Image.file(
-                File(message.localFiles!.first.path),
-                fit: BoxFit.cover,
+            if (message.localFiles?.length == 2) ...[
+              Row(
+                children: [
+                  Expanded(
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.only(
+                        bottomLeft: Radius.circular(20),
+                        topLeft: Radius.circular(20),
+                      ),
+                      child: SizedBox(
+                        height: 25.h,
+                        child: Image.file(
+                          File(message.localFiles!.first.path),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const VerticalDivider(
+                    color: AppColors.backgroundColor,
+                    thickness: 2,
+                    indent: 0,
+                    endIndent: 0,
+                    width: 1,
+                  ),
+                  Expanded(
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.only(
+                        bottomRight: Radius.circular(20),
+                        topRight: Radius.circular(20),
+                      ),
+                      child: Image.file(
+                        File(message.localFiles![1].path),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
+            ] else if (message.localFiles?.length == 3) ...[
+              Row(
+                children: [
+                  Expanded(
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.only(
+                        bottomLeft: Radius.circular(20),
+                        topLeft: Radius.circular(20),
+                      ),
+                      child: SizedBox(
+                        height: 25.h,
+                        child: Image.file(
+                          File(message.localFiles!.first.path),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const VerticalDivider(
+                    color: AppColors.backgroundColor,
+                    thickness: 2,
+                    indent: 0,
+                    endIndent: 0,
+                    width: 1,
+                  ),
+                  Expanded(
+                    child: SizedBox(
+                      height: 25.h,
+                      child: ClipRRect(
+                        borderRadius: const BorderRadius.only(
+                          bottomRight: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                        ),
+                        child: Image.file(
+                          File(message.localFiles![1].path),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Positioned(
+                bottom: 0,
+                top: 0,
+                left: 0,
+                right: 0,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    TitleTextView("+1",
+                        fontSize: 48, color: AppColors.backgroundColor),
+                  ],
+                ),
+              ),
+            ] else if (message.localFiles?.length == 4) ...[
+              Column(
+                children: [
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                              // bottomLeft: Radius.circular(20),
+                              topLeft: Radius.circular(20),
+                            ),
+                            child: SizedBox(
+                              height: 12.5.h,
+                              child: Image.file(
+                                File(message.localFiles!.first.path),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const VerticalDivider(
+                          color: AppColors.backgroundColor,
+                          thickness: 2,
+                          indent: 0,
+                          endIndent: 0,
+                          width: 1,
+                        ),
+                        Expanded(
+                          child: SizedBox(
+                            height: 12.4.h,
+                            child: ClipRRect(
+                              borderRadius: const BorderRadius.only(
+                                // bottomRight: Radius.circular(20),
+                                topRight: Radius.circular(20),
+                              ),
+                              child: Image.file(
+                                File(message.localFiles![1].path),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Divider(
+                    color: AppColors.backgroundColor,
+                    thickness: 1,
+                    height: 0,
+                  ),
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                              bottomLeft: Radius.circular(20),
+                              // topLeft: Radius.circular(20),
+                            ),
+                            child: SizedBox(
+                              height: 12.5.h,
+                              child: Image.file(
+                                File(message.localFiles![2].path),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const VerticalDivider(
+                          color: AppColors.backgroundColor,
+                          thickness: 2,
+                          indent: 0,
+                          endIndent: 0,
+                          width: 1,
+                        ),
+                        Expanded(
+                          child: SizedBox(
+                            height: 12.4.h,
+                            child: ClipRRect(
+                              borderRadius: const BorderRadius.only(
+                                bottomRight: Radius.circular(20),
+                                // topRight: Radius.circular(20),
+                              ),
+                              child: Image.file(
+                                File(message.localFiles![3].path),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ] else if ((message.localFiles?.length ?? 0) > 4) ...[
+              Column(
+                children: [
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                            ),
+                            child: SizedBox(
+                              height: 12.5.h,
+                              child: Image.file(
+                                File(message.localFiles!.first.path),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const VerticalDivider(
+                          color: AppColors.backgroundColor,
+                          thickness: 2,
+                          indent: 0,
+                          endIndent: 0,
+                          width: 1,
+                        ),
+                        Expanded(
+                          child: SizedBox(
+                            height: 12.4.h,
+                            child: ClipRRect(
+                              borderRadius: const BorderRadius.only(
+                                topRight: Radius.circular(20),
+                              ),
+                              child: Image.file(
+                                File(message.localFiles![1].path),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Divider(
+                    color: AppColors.backgroundColor,
+                    thickness: 1,
+                    height: 0,
+                  ),
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                              bottomLeft: Radius.circular(20),
+                            ),
+                            child: SizedBox(
+                              height: 12.5.h,
+                              child: Image.file(
+                                File(message.localFiles![2].path),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const VerticalDivider(
+                          color: AppColors.backgroundColor,
+                          thickness: 2,
+                          indent: 0,
+                          endIndent: 0,
+                          width: 1,
+                        ),
+                        Expanded(
+                          child: SizedBox(
+                            height: 12.4.h,
+                            child: ClipRRect(
+                              borderRadius: const BorderRadius.only(
+                                bottomRight: Radius.circular(20),
+                              ),
+                              child: Image.file(
+                                File(message.localFiles![3].path),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Positioned(
+                bottom: 0,
+                top: 0,
+                left: 0,
+                right: 0,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TitleTextView("+${((message.localFiles?.length ?? 0) - 4)}",
+                        fontSize: 48, color: AppColors.backgroundColor),
+                  ],
+                ),
+              ),
+            ] else ...[
+              ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Image.file(
+                  File(message.localFiles!.first.path),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ],
             Positioned.fill(
               child: Container(
-                color: Colors.black.withOpacity(0.5),
+                decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(20)),
               ),
             ),
             Positioned(
@@ -301,26 +609,20 @@ class MessageImages extends StatelessWidget {
         ),
       );
     } else if (message.status?.isSent == true &&
-        message.uploadedFile?.isNotEmpty == true) {
+        message.imageUrls.isNotEmpty == true) {
       return GestureDetector(
         onTap: () {
           context.pushNamed(
-              path: RoutesName.viewImage,
-              arguments: message.uploadedFile!.first);
+              path: RoutesName.viewImage, arguments: message.imageUrls);
         },
-        child: SizedBox(
-          height: 25.h,
-          width: 75.w,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Image.memory(
-              message.uploadedFile!.first,
-              fit: BoxFit.cover,
-            ),
-          ),
+        child: ChatImageView(
+          imageUrls: message.imageUrls,
         ),
       );
     }
     return 0.hSizedBox;
   }
+
+  int getRemainingCount(int minuesCount) =>
+      (message.uploadedFile?.length ?? 0) - minuesCount;
 }

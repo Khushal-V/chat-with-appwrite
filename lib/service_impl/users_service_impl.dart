@@ -23,21 +23,14 @@ class UsersServiceImpl extends UsersService {
           Query.orderDesc("\$createdAt")
         ],
       );
-      List<AuthUser> allAuthUsers = [];
-      for (Document d in documents.documents) {
-        AuthUser authUser = AuthUser.fromJson(d.data);
-        //Khushal: If user have profile then should get it
-        if (authUser.profileId != null) {
-          authUser.profile =
-              await authService.getUserProfilePic(authUser.profileId!);
-        }
-        allAuthUsers.add(authUser);
-      }
-
       String? lastId =
           documents.documents.length < 10 ? null : documents.documents.last.$id;
       return UserListResponse(
-          total: documents.total, lastId: lastId, users: allAuthUsers);
+          total: documents.total,
+          lastId: lastId,
+          users: documents.documents
+              .map((e) => AuthUser.fromJson(e.data))
+              .toList());
     } catch (e) {
       return Future.error(e);
     }

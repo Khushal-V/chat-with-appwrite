@@ -107,7 +107,7 @@ class UserTile extends StatelessWidget {
             children: [
               //Khushal: User profile
               CircleImage(
-                image: user.profile,
+                image: user.profileUrl,
               ),
               2.w.wSizedBox,
               //Khushal: User name

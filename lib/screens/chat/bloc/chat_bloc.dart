@@ -95,7 +95,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> with ErrorMixin {
   //Khushal: Select message image flow
   _selectChatImage(SelectChatImageEvent event, Emitter<ChatState> emit) async {
     ImagePickerView(
-      allowMultiple: false,
+      allowMultiple: true,
       (pickedFile) {
         add(UpdateSelectChatImageEvent(files: pickedFile ?? []));
       },
