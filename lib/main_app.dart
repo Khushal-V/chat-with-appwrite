@@ -30,6 +30,30 @@ class MyApp extends StatelessWidget {
           ],
           child: MaterialApp(
             title: AppStrings.appName,
+            themeMode: ThemeMode.system,
+            darkTheme: ThemeData(
+              primaryColor: AppColors.textColor,
+              buttonTheme: const ButtonThemeData(
+                buttonColor: AppColors.buttonbackgrouncolor,
+                colorScheme: ColorScheme(
+                  brightness: Brightness.dark,
+                  primary: AppColors.buttonbackgrouncolor,
+                  onPrimary: AppColors.buttonbackgrouncolor,
+                  secondary: AppColors.buttonbackgrouncolor,
+                  onSecondary: AppColors.buttonbackgrouncolor,
+                  error: AppColors.buttonbackgrouncolor,
+                  onError: AppColors.buttonbackgrouncolor,
+                  background: AppColors.buttonbackgrouncolor,
+                  onBackground: AppColors.buttonbackgrouncolor,
+                  surface: AppColors.buttonbackgrouncolor,
+                  onSurface: AppColors.buttonbackgrouncolor,
+                ),
+                textTheme: ButtonTextTheme.normal,
+              ),
+              appBarTheme: const AppBarTheme(
+                color: AppColors.textColor,
+              ),
+            ),
             theme: ThemeData(
               primaryColor: AppColors.primaryColor,
               buttonTheme: const ButtonThemeData(

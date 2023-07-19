@@ -577,11 +577,14 @@ class MessageImages extends StatelessWidget {
                 ),
               ),
             ] else ...[
-              ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Image.file(
-                  File(message.localFiles!.first.path),
-                  fit: BoxFit.cover,
+              SizedBox(
+                width: 75.w,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.file(
+                    File(message.localFiles!.first.path),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ],

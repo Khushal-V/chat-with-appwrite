@@ -143,6 +143,9 @@ class LoginInputs extends StatelessWidget {
       controller: controller,
       title: title,
       obscureText: obscureText,
+      autofillHints: [
+        if (obscureText) AutofillHints.password else AutofillHints.email
+      ],
     );
   }
 }

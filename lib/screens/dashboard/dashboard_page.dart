@@ -252,7 +252,9 @@ class UnReadMessageCount extends StatelessWidget {
           shape: BoxShape.circle,
         ),
         child: TitleTextView(
-            (chat.unreadCount?[AppWriteService.user?.id] ?? 0).toString()),
+          (chat.unreadCount?[AppWriteService.user?.id] ?? 0).toString(),
+          color: AppColors.backgroundColor,
+        ),
       );
     } else {
       return 0.hSizedBox;

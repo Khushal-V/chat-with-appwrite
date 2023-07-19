@@ -63,15 +63,22 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         //Khushal: Update current list with new user
         state.pagingController.itemList?.insert(0, chat);
       } else {
-        //Khushal: Remove incomming user
-        state.pagingController.itemList!
-            .removeWhere((element) => element.id == chat.id);
+        if (getExistChat.lastMessage != chat.lastMessage) {
+          //Khushal: Remove incomming user
+          state.pagingController.itemList!
+              .removeWhere((element) => element.id == chat.id);
 
-        //Khushal: Update incomming chat with "getExistChat" user
-        chat.chatUser = getExistChat.chatUser;
+          //Khushal: Update incomming chat with "getExistChat" user
+          chat.chatUser = getExistChat.chatUser;
 
-        //Khushal: Update list with incomming chat user
-        state.pagingController.itemList?.insert(0, chat);
+          //Khushal: Update list with incomming chat user
+          state.pagingController.itemList?.insert(0, chat);
+        } else {
+          final index = state.pagingController.itemList!
+              .indexWhere((element) => element.id == getExistChat.id);
+          chat.chatUser = getExistChat.chatUser;
+          state.pagingController.itemList![index] = chat;
+        }
       }
     }
     add(RefreshDashboardEvent());

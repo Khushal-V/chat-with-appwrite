@@ -12,6 +12,7 @@ class Input extends StatefulWidget {
   final InputBorder? inputBorder;
   final int maxLine;
   final bool enabled;
+  final Iterable<String>? autofillHints;
   final TextInputType? keyboardType;
   const Input(
       {super.key,
@@ -24,7 +25,8 @@ class Input extends StatefulWidget {
       this.maxLine = 1,
       this.inputBorder,
       this.enabled = true,
-      this.keyboardType});
+      this.keyboardType,
+      this.autofillHints = const <String>[]});
 
   @override
   State<Input> createState() => _InputState();
@@ -56,6 +58,7 @@ class _InputState extends State<Input> {
           controller: widget.controller,
           maxLines: widget.maxLine,
           enabled: widget.enabled,
+          autofillHints: widget.autofillHints,
           minLines: 1,
           obscureText: obscureText,
           cursorColor: Theme.of(context).primaryColor,

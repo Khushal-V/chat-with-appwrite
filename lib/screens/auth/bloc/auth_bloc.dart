@@ -1,6 +1,7 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
 import 'package:bloc/bloc.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
 import 'package:my_chat/configs/app_strings.dart';
@@ -37,6 +38,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with ErrorMixin {
     } else if (event.request.password.isEmpty) {
       return emit(UserLoginFailureState(error: AppErrors.pleaseEnterPassword));
     } else {
+      TextInput.finishAutofillContext();
       emit(UserLoginBusyState());
       try {
         //Khushal: Create new email session
