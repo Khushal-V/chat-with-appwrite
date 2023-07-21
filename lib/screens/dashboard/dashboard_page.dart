@@ -119,6 +119,7 @@ class _DashboardPageUIState extends State<DashboardPageUI> {
               floatingActionButton: (state.pagingController.itemList != null &&
                       state.pagingController.itemList?.isNotEmpty == true)
                   ? FloatingActionButton(
+                      heroTag: DateTime.now().microsecondsSinceEpoch,
                       backgroundColor: Theme.of(context).primaryColor,
                       onPressed: () {
                         context.pushNamed(path: RoutesName.selectUser);
@@ -155,8 +156,11 @@ class ChatTile extends StatelessWidget {
           child: Row(
             children: [
               //Khushal: User profile
-              CircleImage(
-                image: chat.chatUser?.profileUrl,
+              Hero(
+                tag: chat.chatUser!.id!,
+                child: CircleImage(
+                  image: chat.chatUser?.profileUrl,
+                ),
               ),
               10.wSizedBox,
               Expanded(

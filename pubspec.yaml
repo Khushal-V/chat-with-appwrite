@@ -50,6 +50,9 @@ dependencies:
 
   #Unique ID generater
   uuid: ^3.0.7
+
+  #Connection
+  connectivity_plus: ^4.0.1
   
 
 dev_dependencies:

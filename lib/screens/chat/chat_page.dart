@@ -5,8 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_chat/configs/app_strings.dart';
 import 'package:my_chat/custom_widgets/base_scaffold.dart';
+import 'package:my_chat/custom_widgets/circle_image.dart';
 import 'package:my_chat/custom_widgets/input.dart';
 import 'package:my_chat/custom_widgets/loader_view.dart';
+import 'package:my_chat/custom_widgets/title_text_view.dart';
 import 'package:my_chat/screens/auth/models/auth_user.dart';
 import 'package:my_chat/screens/chat/bloc/chat_bloc.dart';
 import 'package:my_chat/screens/chat/models/create_new_chat.dart';
@@ -143,6 +145,21 @@ class _ChatPageUIState extends State<ChatPageUI> {
 
         final bool isLoading = state is CreatingNewChatBusyState;
         return BaseScafflod(
+          titleWidget: Row(
+            children: [
+              Hero(
+                tag: widget.user.id!,
+                child: CircleImage(
+                  image: widget.user.profileUrl,
+                  backgroundColor: AppColors.whiteColor,
+                  height: 25.sp,
+                  width: 25.sp,
+                ),
+              ),
+              16.sp.wSizedBox,
+              TitleTextView(widget.user.name ?? ""),
+            ],
+          ),
           appBarTitle: widget.user.name ?? "",
           actions: [
             BlocConsumer<MessagesBloc, MessagesState>(

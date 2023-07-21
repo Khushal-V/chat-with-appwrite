@@ -11,7 +11,9 @@ class CircleImage extends StatelessWidget {
   final String? image;
   final double? height;
   final double? width;
-  const CircleImage({super.key, this.image, this.height, this.width});
+  final Color? backgroundColor;
+  const CircleImage(
+      {super.key, this.image, this.height, this.width, this.backgroundColor});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,8 @@ class CircleImage extends StatelessWidget {
         padding: const EdgeInsets.all(2),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          border: Border.all(color: Theme.of(context).primaryColor),
+          border: Border.all(
+              color: backgroundColor ?? Theme.of(context).primaryColor),
           image: isImage
               ? DecorationImage(
                   image: CachedNetworkImageProvider(
@@ -37,7 +40,7 @@ class CircleImage extends StatelessWidget {
             ? 0.hSizedBox
             : Icon(
                 Icons.person,
-                color: Theme.of(context).primaryColor,
+                color: backgroundColor ?? Theme.of(context).primaryColor,
               ),
       ),
     );

@@ -9,6 +9,7 @@ import 'package:my_chat/subscribe/subscribe_channel_bloc.dart';
 import 'package:my_chat/utils/app_colors.dart';
 import 'package:my_chat/utils/app_router.dart';
 import 'package:sizer/sizer.dart';
+import 'package:my_chat/connection/bloc/connection_bloc.dart' as connection;
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -20,6 +21,12 @@ class MyApp extends StatelessWidget {
           providers: [
             BlocProvider(
               create: (context) => SubscribeChannelBloc(),
+            ),
+            BlocProvider(
+              create: (context) => connection.ConnectionBloc()
+                ..add(
+                  connection.ListenInternetConnectionEvent(),
+                ),
             ),
             BlocProvider(
               create: (context) => ChatBloc(
