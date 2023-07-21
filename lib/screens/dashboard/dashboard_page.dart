@@ -89,6 +89,7 @@ class _DashboardPageUIState extends State<DashboardPageUI> {
                 ),
               ],
               body: RefreshIndicator(
+                color: Theme.of(context).primaryColor,
                 onRefresh: () async => state.pagingController.refresh(),
                 child: PagedListView<String?, CreateNewChat>.separated(
                   pagingController: state.pagingController,

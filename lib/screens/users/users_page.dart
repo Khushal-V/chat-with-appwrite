@@ -63,20 +63,26 @@ class _UsersPageUIState extends State<UsersPageUI> {
         },
         builder: (context, state) {
           return RefreshIndicator(
+            color: Theme.of(context).primaryColor,
             onRefresh: () async => _pagingController.refresh(),
             child: PagedListView<String?, AuthUser>.separated(
               pagingController: _pagingController,
               builderDelegate: PagedChildBuilderDelegate<AuthUser>(
                 newPageProgressIndicatorBuilder: (context) {
-                  return LoaderView(
-                    loaderColor: Theme.of(context).primaryColor,
+                  return Center(
+                    heightFactor: 25,
+                    child: LoaderView(
+                      loaderColor: Theme.of(context).primaryColor,
+                    ),
                   );
                 },
                 firstPageProgressIndicatorBuilder: (context) {
                   return Center(
-                      child: LoaderView(
-                    loaderColor: Theme.of(context).primaryColor,
-                  ));
+                    heightFactor: 25,
+                    child: LoaderView(
+                      loaderColor: Theme.of(context).primaryColor,
+                    ),
+                  );
                 },
                 itemBuilder: (context, item, index) => UserTile(user: item),
               ),
