@@ -78,3 +78,21 @@ flutter doctor
 ```
 
 Download APK: [My Chat](https://drive.google.com/file/d/1JMQwlaFtOHtIO77ZBV1nH4xP2sH1myLg/view?usp=sharing).
+
+Screen-Shots
+![Login Page](https://github.com/Khushal-V/chat-with-appwrite/assets/125572633/18ebd9fd-2d97-454e-bbb7-b0b72ffb62ce)
+
+![Registration Page](https://github.com/Khushal-V/chat-with-appwrite/assets/125572633/ea0e9111-5a2b-434d-a38a-60ee095dfb26)
+
+![Main/Home Page](https://github.com/Khushal-V/chat-with-appwrite/assets/125572633/0ce1b471-20e4-4cf0-b0fa-4bedeeb099d3)
+
+![Select User Page](https://github.com/Khushal-V/chat-with-appwrite/assets/125572633/30b473c8-5e3d-41a8-a985-fbbf15420eba)
+
+![Chat Page](https://github.com/Khushal-V/chat-with-appwrite/assets/125572633/9fa613a9-2af1-4d23-92c3-9c327ee6fc73)
+
+![Profile Page](https://github.com/Khushal-V/chat-with-appwrite/assets/125572633/4628acdf-50bd-456c-ac92-96b4a2573a1d)
+
+
+
+
+
