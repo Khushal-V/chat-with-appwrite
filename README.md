@@ -76,3 +76,5 @@ If you are missing any libraries or extra files, it will tell you here.
 ```sh
 flutter doctor
 ```
+
+Download APK: [My Chat](https://drive.google.com/file/d/1JMQwlaFtOHtIO77ZBV1nH4xP2sH1myLg/view?usp=sharing).
